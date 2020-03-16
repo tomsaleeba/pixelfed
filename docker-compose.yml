@@ -30,6 +30,10 @@ services:
     #   - "127.0.0.1:8088:80"
     env_file:
       - ./.env
+    environment:
+      VIRTUAL_HOST: ${APP_DOMAIN}
+      LETSENCRYPT_HOST: ${APP_DOMAIN}
+      LETSENCRYPT_EMAIL: ${TLS_CERT_EMAIL}
     volumes:
       - "app-storage:/var/www/storage"
       - "app-bootstrap:/var/www/bootstrap"
