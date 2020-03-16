@@ -20,6 +20,7 @@ services:
       #dockerfile: contrib/docker/Dockerfile.fpm
     image: pixelfed
     restart: unless-stopped
+    init: true
     ## If you have a traefik running, uncomment this to expose Pixelfed
     # labels:
     #   - traefik.enable=true
@@ -54,6 +55,7 @@ services:
       #dockerfile: contrib/docker/Dockerfile.fpm
     image: pixelfed
     restart: unless-stopped
+    init: true
     env_file:
       - ./.env
     volumes:
