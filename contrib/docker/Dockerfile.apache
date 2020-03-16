@@ -68,4 +68,6 @@ ENV APP_ENV=production \
     REMOTE_FOLLOW=false \
     ACTIVITY_PUB=false
 
+EXPOSE 80
+
 CMD /var/www/contrib/docker/start.sh
