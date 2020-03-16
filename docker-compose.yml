@@ -117,16 +117,15 @@ services:
       - "${SSL_EXTERNAL_LISTEN_PORT:-443}:443"
       - "${NONSSL_EXTERNAL_LISTEN_PORT:-80}:80"
     restart: unless-stopped
-    container_name: inat_nginx
+    container_name: pixelfed_nginx
     networks:
       - internal
       - external
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
-      - inat-nginx-certs:/etc/nginx/certs:ro
-      - inat-nginx-vhostd:/etc/nginx/vhost.d
-      - inat-nginx-html:/usr/share/nginx/html
-      - ./nginx/inat.conf:/etc/nginx/conf.d/inat.conf:ro
+      - pixelfed-nginx-certs:/etc/nginx/certs:ro
+      - pixelfed-nginx-vhostd:/etc/nginx/vhost.d
+      - pixelfed-nginx-html:/usr/share/nginx/html
     labels:
       - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
     logging:
@@ -136,14 +135,14 @@ services:
 
   letsencrypt:
     image: jrcs/letsencrypt-nginx-proxy-companion:v1.12
-    container_name: inat_le
+    container_name: pixelfed_le
     restart: unless-stopped
     init: true
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - inat-nginx-certs:/etc/nginx/certs
-      - inat-nginx-vhostd:/etc/nginx/vhost.d
-      - inat-nginx-html:/usr/share/nginx/html
+      - pixelfed-nginx-certs:/etc/nginx/certs
+      - pixelfed-nginx-vhostd:/etc/nginx/vhost.d
+      - pixelfed-nginx-html:/usr/share/nginx/html
     entrypoint: bash -c '[ "$DISABLE_LETSENCRYPT" = true ] && (echo "LE disabled, sleeping" && sleep 9999999999999) || /app/entrypoint.sh /app/start.sh'
     environment:
       DISABLE_LETSENCRYPT: ${DISABLE_LETSENCRYPT:-false}
@@ -160,9 +159,9 @@ volumes:
   pg-data:
   app-storage:
   app-bootstrap:
-  inat-nginx-certs:
-  inat-nginx-vhostd:
-  inat-nginx-html:
+  pixelfed-nginx-certs:
+  pixelfed-nginx-vhostd:
+  pixelfed-nginx-html:
 
 networks:
   internal:
