@@ -40,7 +40,7 @@ services:
       - "app-bootstrap:/var/www/bootstrap"
       - "./.env:/var/www/.env"
     networks:
-      # - external
+      - external
       - internal
     logging:
       driver: "json-file"
